@@ -1,3 +1,4 @@
+
 class IndecisionApp extends React.Component {
     render() {
         const title = 'Indecision';
@@ -51,8 +52,13 @@ class Action extends React.Component {
 
 // Options -> Options component here
 class Options extends React.Component {
+    constructor(props) {
+        super(props);
+        this.removeAll =this.removeAll.bind(this);
+    }
     removeAll() {
-        alert('removeAll button firing')
+        // alert('removeAll button firing')
+        console.log(this.props.options);
     }
     render() {
         return (
