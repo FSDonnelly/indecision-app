@@ -1,80 +1,108 @@
-console.log('app.js is running');
-// -- CHALLENGE #2
-// create app object title/subtitle
-// use title/subtitle in the template
-// render template
+class IndecisionApp extends React.Component {
+    render() {
+        const title = 'Indecision';
+        const subtitle = 'Put your life in the hands of a computer';
+        const options = ['Thing 1', 'Thing 2', 'Thing 3', 'Thing 4']
 
-// JSX - JavaScript XML
 
-// if staements
-// ternary operators
-// logical operators
-
-// -- CHALLENGE #3
-// only render the subtitle (and p tag) if subtitle exist - logical and operator
-// rendedr new p tag - is options.length > 0 "Here are your options" "No options"
-
-// babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch
-
-const app = {
-    title: "Indecision App",
-    subtitle: "Put your life in the hands of a computer",
-    options: []
-}
-const appRoot = document.getElementById("app");
-
-const onFormSubmit = (e) => {
-    e.preventDefault();
-    // console.log("form submitted")
-    const option = e.target.elements.option.value;
-
-    if (option) {
-        app.options.push(option);
-        e.target.elements.option.value = "";
-        renderSubmitForm();
+        return (
+            <div>
+                <Header title={title} subtitle={subtitle} />
+                <Action />
+                <Options options={options} />
+                <AddOption />
+            </div>
+        );
     }
-};
-
-const removeAll = () => {
-    app.options = [];
-    renderSubmitForm();
 }
-// create "remove all" button above list
-// on click -> wipe array and rerender
 
-const onMakeDecision = () => {
-    const randomNum = Math.floor(Math.random() * app.options.length);
-    const option = app.options[randomNum];
-    alert(option);
-};
 
-const renderSubmitForm = () => {
-    const template = (
-        <div>
-            <h1>{app.title}</h1>
-            {app.subtitle && <p>{app.subtitle}</p>}
-            <p>{app.options.length > 0 ? 'Here are your options' : 'No options'}</p>
-            <button disabled={app.options.length === 0} onClick= {onMakeDecision}>What should I do?</button>
-            <button onClick={removeAll}>Remove All</button>
-            
-            <ol>
+class Header extends React.Component {
+    render() {
+        ;
+        return (
+            <div>
+                <h1>{this.props.title}</h1>
+                <h2>{this.props.subtitle}</h2>
+            </div>
+        );
+    }
+}
+
+class Action extends React.Component {
+    handlePick() {
+        alert('handlePick');
+    }
+    render() {
+        return (
+            <div>
+                <button onClick={this.handlePick}>What should I do?</button>
+            </div>
+        );
+    }
+}
+// Setup options prop for options component 
+// Render the length of the array
+// render new <p> for each option (set text set key)
+
+// add removeAll button 
+// setup removeAll -> alert some message
+// setup onClick to fire the alert
+
+// Options -> Options component here
+class Options extends React.Component {
+    removeAll() {
+        alert('removeAll button firing')
+    }
+    render() {
+        return (
+            <div>
+                <button onClick={this.removeAll}>Remove All</button>
                 {
-                    app.options.map((option) => <li key={option}>{option}</li>)
+                    this.props.options.map((option) => <Option key={option} optionText={option} />)
                 }
-            </ol>
-            <form onSubmit={onFormSubmit}>
-                <input type="text" name="option" />
-                <button>Add Option</button>
-            </form>
-        </div>
-    );
-   
-    ReactDOM.render(template, appRoot);
-};
-
-renderSubmitForm();
+            </div>
+        );
+    }
+}
 
 
-// Create render function that renders new jsx 
-//Call it right away
-//Call it after options array added to
+// Option -> Option component here
+class Option extends React.Component {
+    render() {
+        return (
+            <div>
+                {this.props.optionText}
+            </div>
+        );
+    }
+}
+// AddOption -> 
+// 1. setup the form with text inoput and submit button
+// 2. wire up onSubmit
+// 3. handleAddOption -> fetch the value of the type -> if value then alert
+class AddOption extends React.Component {
+    handleAddOption(e) {
+        e.preventDefault();
+
+        const option = e.target.elements.option.value.trim();
+
+        if (option) {
+            alert(option);
+        }
+    }
+    render() {
+        return (
+            <div>
+                <form onSubmit={this.handleAddOption}>
+                    <input type="text" name="option" />
+                    <button>Add Option</button>
+                </form>
+            </div>
+        );
+    }
+}
+
+
+
+ReactDOM.render(<IndecisionApp />, document.getElementById(`app`));
