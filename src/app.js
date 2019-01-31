@@ -63,34 +63,52 @@ class IndecisionApp extends React.Component {
     }
 }
 
-
-class Header extends React.Component {
-    render() {
-        ;
-        return (
-            <div>
-                <h1>{this.props.title}</h1>
-                <h2>{this.props.subtitle}</h2>
-            </div>
-        );
-    }
+const Header = (props) => {
+    return (
+        <div>
+            <h1>{props.title}</h1>
+            <h2>{props.subtitle}</h2>
+        </div>
+    );
 }
-
-class Action extends React.Component {
-
-    render() {
-        return (
-            <div>
-                <button
-                    onClick={this.props.handlePick}
-                    disabled={!this.props.hasOptions}
-                >
-                    What should I do?
-                </button>
-            </div>
-        );
-    }
+// class Header extends React.Component {
+//     render() {
+//         ;
+//         return (
+//             <div>
+//                 <h1>{this.props.title}</h1>
+//                 <h2>{this.props.subtitle}</h2>
+//             </div>
+//         );
+//     }
+// }
+const Action = (props) => {
+    return (
+        <div>
+            <button
+                onClick={props.handlePick}
+                disabled={!props.hasOptions}
+            >
+                What should I do?
+            </button>
+        </div>
+    );
 }
+// class Action extends React.Component {
+
+//     render() {
+//         return (
+//             <div>
+//                 <button
+//                     onClick={this.props.handlePick}
+//                     disabled={!this.props.hasOptions}
+//                 >
+//                     What should I do?
+//                 </button>
+//             </div>
+//         );
+//     }
+// }
 // Setup options prop for options component 
 // Render the length of the array
 // render new <p> for each option (set text set key)
@@ -98,33 +116,49 @@ class Action extends React.Component {
 // add removeAll button 
 // setup removeAll -> alert some message
 // setup onClick to fire the alert
-
-// Options -> Options component here
-class Options extends React.Component {
-
-    render() {
-        return (
-            <div>
-                <button onClick={this.props.handleDeleteOptions}>Remove All</button>
-                {
-                    this.props.options.map((option) => <Option key={option} optionText={option} />)
-                }
-            </div>
-        );
-    }
+const Options = (props) => {
+    return (
+        <div>
+            <button onClick={props.handleDeleteOptions}>Remove All</button>
+            {
+                props.options.map((option) => <Option key={option} optionText={option} />)
+            }
+        </div>
+    );
 }
+// Options -> Options component here
+// class Options extends React.Component {
 
+//     render() {
+//         return (
+//             <div>
+//                 <button onClick={this.props.handleDeleteOptions}>Remove All</button>
+//                 {
+//                     this.props.options.map((option) => <Option key={option} optionText={option} />)
+//                 }
+//             </div>
+//         );
+//     }
+// }
+
+const Option = (props) => {
+    return (
+        <div>
+            <li>{props.optionText}</li>
+        </div>
+    );
+}
 
 // Option -> Option component here
-class Option extends React.Component {
-    render() {
-        return (
-            <div>
-                <li>{this.props.optionText}</li>
-            </div>
-        );
-    }
-}
+// class Option extends React.Component {
+//     render() {
+//         return (
+//             <div>
+//                 <li>{this.props.optionText}</li>
+//             </div>
+//         );
+//     }
+// }
 // AddOption -> 
 // 1. setup the form with text inoput and submit button
 // 2. wire up onSubmit
@@ -162,6 +196,13 @@ class AddOption extends React.Component {
     }
 }
 
-
+// const User = (props) => {
+//     return (
+//         <div>
+//             <p>Name: {props.name}</p>
+//             <p>Age: {props.age}</p>
+//         </div>
+//     );
+// };
 
 ReactDOM.render(<IndecisionApp />, document.getElementById(`app`));
