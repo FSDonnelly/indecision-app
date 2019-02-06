@@ -3,17 +3,39 @@ import AddOption from './AddOption';
 import Options from './Options';
 import Header from './Header';
 import Action from './Action';
+
+// pull the state out of constructor
+// convert all 4 event handlers to class properties (arrow functions)
+// delete the construcctor completely
+
 export default class IndecisionApp extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
-        this.handlePick = this.handlePick.bind(this);
-        this.handleAddOption = this.handleAddOption.bind(this);
-        this.handleDeleteOption = this.handleDeleteOption.bind(this);
-        this.state = {
-            options: []
-        };
-    }
+    state = {
+        options: []
+    };
+       // handleDeleteOptions
+    handleDeleteOptions = () => {
+        this.setState(() => ({ options: [] }))
+    };
+    // handlePick - pass down to Action and setup onClick - bind here
+    // randomly pick an option 
+    handleDeleteOption = (optionToRemove) => {
+        this.setState((prevState) => ({
+            options: prevState.options.filter((option) => optionToRemove !== option)
+        }));
+    };
+    handlePick = () => {
+        const randomNum = Math.floor(Math.random() * this.state.options.length);
+        const option = this.state.options[randomNum];
+        alert(option);
+    };
+    handleAddOption = (option) => {
+        if (!option) {
+            return 'Enter Valid Option'
+        } else if (this.state.options.indexOf(option) > -1) {
+            return 'This Option Already Exists'
+        }
+        this.setState((prevState) => ({ options: prevState.options.concat(option) }))
+    };
 
     componentDidMount() {
         try {
@@ -36,31 +58,7 @@ export default class IndecisionApp extends React.Component {
     componentWillUnmount() {
         console.log("componentWillUnmount");
     }
-    // handleDeleteOptions
-    handleDeleteOptions() {
-        this.setState(() => ({ options: [] }))
-    };
-    // handlePick - pass down to Action and setup onClick - bind here
-    // randomly pick an option 
-    handleDeleteOption(optionToRemove) {
-        this.setState((prevState) => ({
-            options: prevState.options.filter((option) => optionToRemove !== option)
-        }));
-    }
-    handlePick() {
-        const randomNum = Math.floor(Math.random() * this.state.options.length);
-        const option = this.state.options[randomNum];
-        alert(option);
-    }
-    handleAddOption(option) {
-        if (!option) {
-            return 'Enter Valid Option'
-        } else if (this.state.options.indexOf(option) > -1) {
-            return 'This Option Already Exists'
-        }
-        this.setState((prevState) => ({ options: prevState.options.concat(option) }))
-    };
-
+ 
     render() {
         const subtitle = 'Put your life in the hands of a computer';
 
